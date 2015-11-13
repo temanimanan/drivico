@@ -1,0 +1,539 @@
+<!doctype html>
+<html class="no-js" lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title>App</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Styles -->
+		<link rel="stylesheet" href="styles/bootstrap.min.css" />
+		<link rel="stylesheet" href="styles/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="styles/bootstrap-adjustments.css" />
+		<link rel="stylesheet" href="styles/reset.css" />
+
+		<link rel="stylesheet" href="styles/typography.css" />
+		<link rel="stylesheet" href="styles/main.css" />
+	</head>
+	<body ng-app="app" ng-controller="appController">
+		<!--[if lt IE 8]>
+			<div class="alert alert-danger" role="alert">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+		<![endif]-->
+
+
+		<div class="container-main">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-3 header"> 
+						<h1></h1>
+					</div>
+					<div class="col-sm-9 header-content"> 
+						<span class="glyphicon glyphicon-user margined-icon" aria-hidden="true"></span>
+						Amanpreet Singh &nbsp;&nbsp; <a>Edit</a> |  <a>Signout</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-sm-3 menuitems"> 
+						<ul class="nav nav-pills nav-stacked" ng-click="changeTab($event)">
+							<li role="presentation" ng-class="{'active': homeTab }"><a data-tab="home">
+								<span class="glyphicon glyphicon-dashboard margined-icon" aria-hidden="true"></span>
+								Dashboard
+							</a></li>
+							<li role="presentation" ng-class="{'active': vehiclesTab }"><a data-tab="vehicles">
+								<span class="glyphicon glyphicon-th margined-icon" aria-hidden="true"></span>
+								Vehicles
+							</a></li>
+							<li role="presentation" ng-class="{'active': servicesTab }"><a data-tab="services">
+								<span class="glyphicon glyphicon-repeat margined-icon" aria-hidden="true"></span>
+								Services
+							</a></li>
+							<li role="presentation" ng-class="{'active': dealersTab }"><a data-tab="dealers">
+								<span class="glyphicon glyphicon-book margined-icon" aria-hidden="true"></span>
+								Dealers
+							</a></li>
+							<li role="presentation" ng-class="{'active': ordersTab }"><a data-tab="orders">
+								<span class="glyphicon glyphicon-check margined-icon" aria-hidden="true"></span>
+								Orders
+							</a></li>
+							<li role="presentation" ng-class="{'active': payinfoTab }"><a data-tab="payinfo">
+								<span class="glyphicon glyphicon-usd margined-icon" aria-hidden="true"></span>
+								Payment Info
+							</a></li>
+							<li role="presentation" ng-class="{'active': schedulesTab }"><a data-tab="schedules">
+								<span class="glyphicon glyphicon-calendar margined-icon" aria-hidden="true"></span>
+								Schedules
+							</a></li>
+							<li role="presentation" ng-class="{'active': helpTab }"><a data-tab="help">
+								<span class="glyphicon glyphicon-info-sign margined-icon" aria-hidden="true"></span>
+								Help
+							</a></li>
+						</ul>
+					</div>
+
+
+					<div class="col-sm-9 content ng-cloak"> 
+
+						<!-- TAB HOME -->
+						<div ng-show="homeTab">
+							<div class="chart">
+								<canvas id="chartA" width="350" height="250"></canvas>
+							</div>
+							<div class="chart last">
+								<canvas id="chartB" width="350" height="250"></canvas>
+							</div>
+
+							<br class="clear" />
+							<br class="clear" />
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">Vehicle Statistics</h3>
+								</div>
+								<div class="panel-body">
+									..
+								</div>
+							</div>
+
+						</div>
+
+						<!-- TAB VEHICLES -->
+						<div ng-show="vehiclesTab">
+							<ol class="breadcrumb" ng-show="!vehicleSelected">
+								<!-- <li class="active"><a >Vehicles</a></li> -->
+								<li class="active">Vehicles</li>
+							</ol>
+							<ol class="breadcrumb" ng-show="vehicleSelected">
+								<!-- <li class="active"><a >Vehicles</a></li> -->
+								<li><a ng-click="backToVehicles()">Vehicles</a></li>
+								<li class="active">{{selectedVehicleText}}</li>
+							</ol>
+							<br />
+
+							<div class="vehicleSelected" ng-show="vehicleSelected">
+
+								<div class="list-group">
+									<a class="list-group-item"> 
+										<h4>Cleaning</h4><br />
+										<p> 
+											Vendor: Artur Service Center<br />
+											Schedule: Every Month<br />
+											Address: 123 fox corner rd, 02818<br />
+											Next Service: Friday 14, 2015 (Two days from now)
+
+										</p><br />
+										<button type="button" class="btn btn-primary">
+											<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+											&nbsp;&nbsp;Edit
+										</button>
+										<button type="button" class="btn btn-success">
+											<span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+											&nbsp;&nbsp;Start
+										</button>										
+
+									</a>
+								</div>
+
+							</div>
+
+							<div class="list-group" ng-click="handleVechicleClick($event)" ng-show="!vehicleSelected">
+								<a class="list-group-item" ng-repeat="vehicle in vehicles track by $index" 
+								data-vehicle-action="selectVehicle" data-vehicle-id="{{$index}}"> 
+									<span class="badge badge-danger" data-vehicle-action="selectVehicle">3</span>
+									<h4>{{vehicle.year}} / {{vehicle.make}} / {{vehicle.model}} / {{vehicle.vin}}</h4><br />
+									<p>
+										<button type="button" class="btn btn-primary">Edit</button>
+										<button type="button" class="btn btn-danger" data-vehicle-id="{{$index}}" data-vehicle-action="delete">Delete</button>
+									</p>
+								</a>
+
+								<li class="list-group-item" ng-show="showNewVehicle"> 
+									<form name="newVehicleForm" ng-submit="addVehicle()">
+										<div class="col-sm-12">
+											<div class="col-sm-3 "> 
+												<div class="input-group">
+													<span class="input-group-addon" id="basic-addon1">
+														<span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+													</span>
+													<input type="text" class="form-control" ng-model="newVehicleForm.vin" placeholder="Vin Number" aria-describedby="basic-addon1">
+												</div>
+											</div>
+											<div class="col-sm-3 ">
+												<select ng-model="newVehicleForm.year" class="form-control">
+													<option value="-1"> Year </option>
+													<option ng-repeat="year in years track by $index" value="{{$index}}"> 
+														{{year}}
+													</option>
+												</select>
+											</div>
+											<div class="col-sm-3">
+												<select ng-model="newVehicleForm.make" class="form-control"> 
+													<option value="-1"> Make </option>
+													<option ng-repeat="make in makes track by $index" value="{{$index}}"> 
+														{{make}} 
+													</option>
+												</select> 
+											</div>
+											<div class="col-sm-3">
+												<select ng-model="newVehicleForm.model" class="form-control"> 
+													<option value="-1"> Model </option> 
+													<option ng-repeat="make in makesModels[newVehicleForm.make] track by $index" value="{{$index}}"> {{make}} </option>
+												</select> 
+											</div>
+										</div>
+										<br class="clear" /><br />
+
+										<p>
+											<button type="submit" class="btn btn-primary">Add this Vehicle</button>
+											<button type="button" class="btn btn-danger" ng-click="toggleShowNewVehicle(false)">
+												Cancel
+											</button>
+										</p>
+									</form>
+								</li>
+
+								<a class="list-group-item list-group-item-info" 
+								ng-show="!showNewVehicle" ng-click="toggleShowNewVehicle()"> 
+									<h4>
+										<span class="glyphicon glyphicon-plus margined-icon" aria-hidden="true"></span>
+										Add Vehicle
+									</h4>
+								</a>
+							</div>
+
+							<nav class="pagination-container">
+								<ul class="pagination">
+									<li>
+										<a aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a>
+									</li>
+									<li class="active"><a >1</a></li>
+									<li><a >2</a></li>
+									<li><a >3</a></li>
+									<li>
+										<a aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+
+						<!-- TAB SERVICES -->
+						<div ng-show="servicesTab" class="servicesTab">
+
+							<div class="panel panel-success">
+								<div class="panel-heading">
+									<h3 class="panel-title">Car Wash, Cleaning and Detailing</h3>
+								</div>
+								<div class="panel-body">
+									<p>Car Wash Servicing offers state of the art car care and detail centers that are committed to helping customers protect their investment and the environment by performing professional Car Wash services that conserve water and use environmentally-friendly products. The staff is friendly, courteous, and professionally trained to provide our customers with a selection of car care services. Whether you own a car, truck, or luxury sedan, all services you need are offered to keep your vehicle looking like new.
+									</p>
+									<br /> <button type="button" class="btn btn-primary">View Dealers</button>
+								</div>
+							</div>
+
+							<div class="panel panel-info">
+								<div class="panel-heading">
+									<h3 class="panel-title">Car Repairs</h3>
+								</div>
+								<div class="panel-body">
+									<p>Car Wash Servicing offers state of the art car care and detail centers that are committed to helping customers protect their investment and the environment by performing professional Car Wash services that conserve water and use environmentally-friendly products. The staff is friendly, courteous, and professionally trained to provide our customers with a selection of car care services. Whether you own a car, truck, or luxury sedan, all services you need are offered to keep your vehicle looking like new.
+									</p>
+									<br /> <button type="button" class="btn btn-primary">View Dealers</button>
+								</div>
+							</div>
+
+							<div class="panel panel-warning">
+								<div class="panel-heading">
+									<h3 class="panel-title">Performance Tuning</h3>
+								</div>
+								<div class="panel-body">
+									<p>Car Wash Servicing offers state of the art car care and detail centers that are committed to helping customers protect their investment and the environment by performing professional Car Wash services that conserve water and use environmentally-friendly products. The staff is friendly, courteous, and professionally trained to provide our customers with a selection of car care services. Whether you own a car, truck, or luxury sedan, all services you need are offered to keep your vehicle looking like new.
+									</p>
+									<br /> <button type="button" class="btn btn-primary">View Dealers</button>
+								</div>
+							</div>
+
+							<nav class="pagination-container">
+								<ul class="pagination">
+									<li>
+										<a aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a>
+									</li>
+									<li class="active"><a >1</a></li>
+									<li><a >2</a></li>
+									<li><a >3</a></li>
+									<li>
+										<a aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a>
+									</li>
+								</ul>
+							</nav>
+
+						</div>
+
+						<!-- TAB ORDERS -->
+						<div ng-show="ordersTab" class="ordersTab">
+
+							<ul class="list-group">
+								<li class="list-group-item">
+									<span class="badge badge-success badge-md">$20.00</span>
+									<h4>Cleaning Service</h4>
+									<h3>2004 - BMW by  <a>Artur Services</a> </h3> <h2>August 20, 2015</h2>
+									<p> Cleaned the vehicle as per customer's demands</p>
+
+									<button type="button" class="btn btn-info">More Details</button>
+									<button type="button" class="btn btn-success">Print Receipt</button>
+								</li>
+
+								<li class="list-group-item">
+									<span class="badge badge-success badge-md">$20.00</span>
+									<h4>Cleaning Service</h4>
+									<h3>2004 - BMW by  <a>Artur Services</a> </h3> <h2>August 20, 2015</h2>
+									<p> Cleaned the vehicle as per customer's demands</p>
+
+									<button type="button" class="btn btn-info">More Details</button>
+									<button type="button" class="btn btn-success">Print Receipt</button>
+								</li>
+
+								<li class="list-group-item">
+									<span class="badge badge-success badge-md">$20.00</span>
+									<h4>Cleaning Service</h4>
+									<h3>2004 - BMW by  <a>Artur Services</a> </h3> <h2>August 20, 2015</h2>
+									<p> Cleaned the vehicle as per customer's demands</p>
+
+									<button type="button" class="btn btn-info">More Details</button>
+									<button type="button" class="btn btn-success">Print Receipt</button>
+								</li>
+							</ul>
+
+
+							<nav class="pagination-container">
+								<ul class="pagination">
+									<li>
+										<a aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a>
+									</li>
+									<li class="active"><a >1</a></li>
+									<li><a >2</a></li>
+									<li><a >3</a></li>
+									<li>
+										<a aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a>
+									</li>
+								</ul>
+							</nav>
+
+
+						</div>
+
+
+						<!-- TAB DEALERS -->
+						<div ng-show="dealersTab" class="dealersTab">
+
+							<ul class="list-group">
+								<li class="list-group-item">
+
+									<span class="badge badge-warning">
+										<span class="glyphicon glyphicon-star n5" aria-hidden="true"></span>
+									</span>
+
+									<h4> Artur Services </h4>
+									<span class="address">
+										400 mineral spring avenue, <br />
+										East Greenwich, Rhode Island 02818 <br />
+										<span class="glyphicon glyphicon-phone" aria-hidden="true"></span> +1-401-234-3009
+									</span>
+
+									<div class="label-container">
+										<span class="label label-default">Cleaning</span>
+										<span class="label label-primary">Repairs</span>
+										<span class="label label-success">Detailing</span>
+										<span class="label label-info">Mechanics</span>
+									</div>
+
+									<button type="button" class="btn btn-info">More Details</button>
+
+								</li>
+								<li class="list-group-item">
+
+									<span class="badge badge-warning">
+										<span class="glyphicon glyphicon-star n3" aria-hidden="true"></span>
+									</span>
+
+									<h4> Artur Services </h4>
+									<span class="address">
+										400 mineral spring avenue, <br />
+										East Greenwich, Rhode Island 02818 <br />
+										<span class="glyphicon glyphicon-phone" aria-hidden="true"></span> +1-401-234-3009
+									</span>
+
+									<div class="label-container">
+										<span class="label label-default">Cleaning</span>
+										<span class="label label-primary">Repairs</span>
+										<span class="label label-success">Detailing</span>
+										<span class="label label-info">Mechanics</span>
+										<span class="label label-warning">Parts</span>
+										<span class="label label-danger">Body Work</span>
+									</div>
+
+									<button type="button" class="btn btn-info">More Details</button>
+
+								</li>
+
+							</ul>
+
+
+							<nav class="pagination-container">
+								<ul class="pagination">
+									<li>
+										<a aria-label="Previous"> <span aria-hidden="true">&laquo;</span> </a>
+									</li>
+									<li class="active"><a >1</a></li>
+									<li><a >2</a></li>
+									<li><a >3</a></li>
+									<li>
+										<a aria-label="Next"> <span aria-hidden="true">&raquo;</span> </a>
+									</li>
+								</ul>
+							</nav>
+
+						</div>
+
+
+						<!-- TAB PAYMENTS -->
+						<div ng-show="payinfoTab" class="payinfoTab">
+
+							
+							<div class="col-sm-8">
+								<h4>Payment Details</h4>
+								<h3>Payment Method</h3>
+								<select class="form-control" 
+										ng-model="paymentMethod" ng-init="paymentMethod='cc'">
+									<option value="cc"> Credit Card</option>
+									<option value="ba"> Bank Account</option>
+								</select>
+								<br />
+
+								<span ng-show="paymentMethod==='cc'">
+									<h3>Payment Details</h3>
+									<div class="input-group">
+										<span class="input-group-addon" id="basic-addon1">
+											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+										</span>
+										<input type="text" class="form-control" placeholder="Name as on the card" aria-describedby="basic-addon1">
+									</div>
+									<br />
+									
+									<div class="input-group">
+										<span class="input-group-addon" id="basic-addon1">
+											<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
+										</span>
+										<input type="text" class="form-control" placeholder="Card Number" aria-describedby="basic-addon1">
+									</div>
+									<br />
+
+									<h3>Card Expiry</h3>
+									<div class="col-sm-12">
+										<div class="col-sm-3 "> <select class="form-control"> <option> MM </option> </select> </div>
+										<div class="col-sm-3 "> <select class="form-control"> <option> YYYY </option> </select> </div>
+									</div>
+									<br class="clear" /><br />
+
+									<div class="input-group col-sm-4">
+										<span class="input-group-addon" id="basic-addon1">
+											<span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span>
+										</span>
+										<input type="password" class="form-control" placeholder="Security Code" aria-describedby="basic-addon1">
+
+									</div>
+
+									<br />
+									<button type="button" class="btn btn-primary">
+										<span class="glyphicon glyphicon-floppy-disk" 
+												aria-hidden="true"></span>
+										&nbsp;&nbsp;Save
+									</button>
+								</span>
+
+
+								<span ng-show="paymentMethod==='ba'">
+
+									<h3>Select Bank</h3>
+									<select class="form-control"><option>Bank Of America</option></select>
+									<br class="clear" />
+
+
+									<h3>Payment Details</h3>
+									<div class="input-group">
+										<span class="input-group-addon" id="basic-addon1">
+											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+										</span>
+										<input type="text" class="form-control" 
+												placeholder="Account Holder Name" 
+												aria-describedby="basic-addon1">
+									</div>
+									<br />
+
+									<div class="input-group">
+										<span class="input-group-addon" id="basic-addon1">
+											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+										</span>
+										<input type="text" class="form-control" 
+												placeholder="Account Number" 
+												aria-describedby="basic-addon1">
+									</div>
+									<br />
+
+									<div class="input-group">
+										<span class="input-group-addon" id="basic-addon1">
+											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+										</span>
+										<input type="text" class="form-control" 
+												placeholder="Routing Number" 
+												aria-describedby="basic-addon1">
+									</div>
+									<br />
+
+									<h3>Your Address</h3>
+									<input type="text" 
+											class="form-control" placeholder="Apartment/Building Number" 
+											aria-describedby="basic-addon1">
+									<br class="clear" />
+
+									<input type="text" class="form-control" placeholder="Street Name/Number" 
+											aria-describedby="basic-addon1">
+									<br class="clear" />
+
+									<input type="text" class="form-control" placeholder="City/State & Zipcode" 
+											aria-describedby="basic-addon1">
+									<br class="clear" />
+
+									<button type="button" class="btn btn-primary">
+										<span class="glyphicon glyphicon-floppy-disk" 
+												aria-hidden="true"></span>
+										&nbsp;&nbsp;Save
+									</button>
+
+								</span>
+
+
+							</div>
+
+						</div>
+
+					</div>
+
+
+
+
+
+
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Libraries Include -->
+		<script src="libs/jquery.min.js"></script>
+		<script src="libs/angular.min.js"></script>
+		<script src="libs/chart.min.js"></script>
+
+		<!-- App code -->
+		<script src="scripts/app.js"></script>
+	</body>
+</html>

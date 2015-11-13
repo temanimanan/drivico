@@ -1,0 +1,68 @@
+body, html{
+	height: 100%;
+	font-family: 'opensans', 'arial';
+	font-size: 14px;	
+}
+
+.ng-cloak{
+	display: none;
+}
+
+br.clear{ clear: both; }
+
+.separator.size.s1{ display: block; clear: both; height: 20px; }
+
+.container-main{
+	min-width: 900px;
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.container-main .header{ padding: 20px 20px 0 20px; }
+.container-main .header-content{ padding: 20px 20px 0 20px; text-align: right; }
+.container-main .menuitems{ padding: 20px; }
+.container-main .content{ padding-top: 20px; }
+
+.margined-icon{ margin-right: 10px; }
+
+a{ cursor: pointer; }
+
+.panel-body p{
+	line-height: 20px;
+}
+
+.servicesTab .panel{
+	margin-bottom: 20px;
+}
+
+.ordersTab h4{ margin-bottom: 20px; font-size: 25px; }
+.ordersTab h3{ font-weight: bold; margin-bottom: 10px; }
+.ordersTab h2{ font-weight: bold; margin-bottom: 10px; }
+.ordersTab p{
+	margin-bottom: 20px;
+	line-height: 20px;
+}
+
+
+.pagination-container{
+	text-align: center;
+	margin-top: 20px;
+}
+
+.chart{
+	border: 1px #bbb solid;
+	padding: 20px;
+	width: calc( 50% - 20px ); box-sizing: border-box;
+	float: left; 
+	border-radius: 10px;
+}
+.chart.last{
+	float: right;
+}
+
+.dealersTab h4{ font-size: 20px; margin-bottom: 15px; }
+.dealersTab span.address{ margin-bottom: 15px; display: block; line-height: 20px;}
+.dealersTab .label-container{ margin-bottom: 15px; }
+
+.payinfoTab h4{ font-size: 20px; margin-bottom: 20px; }
+.payinfoTab h3{ font-size: 15px; margin-bottom: 10px; }
