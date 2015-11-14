@@ -25,16 +25,14 @@
 		<div class="container-main">
 			<div class="container">
 				<div class="row top">
-					<div class="col-sm-3 header"> 
-						<h1></h1>
-					</div>
-					<div class="col-sm-9 header-content"> 
+					<div class="col-xs-12 header-content"> 
 						<span class="glyphicon glyphicon-user margined-icon" aria-hidden="true"></span>
 						Amanpreet Singh &nbsp;&nbsp; <a>Edit</a> |  <a>Signout</a>
 					</div>
+					<br class="clear" />
 				</div>
 				<div class="row lower">
-					<div class="col-sm-3 menuitems"> 
+					<div class="col-xs-3 menuitems hidden-xs"> 
 						<ul class="nav nav-pills nav-stacked" ng-click="changeTab($event)">
 							<li role="presentation" ng-class="{'active': homeTab }"><a data-tab="home">
 								<span class="glyphicon glyphicon-dashboard margined-icon" aria-hidden="true"></span>
@@ -72,15 +70,19 @@
 					</div>
 
 
-					<div class="col-sm-9 content ng-cloak"> 
+					<div class="col-xs-12 col-sm-9 content ng-cloak"> 
 
 						<!-- TAB HOME -->
 						<div class="tab" ng-show="homeTab">
-							<div class="chart">
-								<canvas id="chartA" width="350" height="250"></canvas>
+							<div class="chart-container col-xs-12 col-sm-6">
+								<div class="chart">
+									<canvas id="chartA" width="350" height="250"></canvas>
+								</div>
 							</div>
-							<div class="chart last">
-								<canvas id="chartB" width="350" height="250"></canvas>
+							<div class="chart-container last col-xs-12 col-sm-6">
+								<div class="chart">
+									<canvas id="chartB" width="350" height="250"></canvas>
+								</div>
 							</div>
 
 							<br class="clear" />
@@ -509,17 +511,18 @@
 									</button>
 
 								</span>
-
-
 							</div>
-
 						</div>
 
 					</div>
 
-
-
-
+				<div class="modal-popup black s400 hidden">
+					<div class="modal-popup-content">
+						<div class="edit-service">
+							<input />
+						</div>
+					</div>
+				</div>
 
 
 				</div>

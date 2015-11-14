@@ -4,7 +4,7 @@ var ctxA, dataA, chartA,
 	ctxB, dataB, chartB;
 var bootStrapChart = function(){
 
-	Chart.defaults.global.animation = false;
+	//Chart.defaults.global.animation = false;
 
 	ctxA = document.getElementById("chartA").getContext("2d");
 	ctxB = document.getElementById("chartB").getContext("2d");
@@ -58,11 +58,9 @@ app.controller('appController', ['$scope', function($scope){
 			selectedTab = tab + 'Tab';
 
 			if( selectedTab === 'homeTab' ){
-				$scope.renderGraph( chartA );
-				$scope.renderGraph( chartB );
+				$scope.renderGraph();
 			}else{
-				$scope.renderGraph( chartA, true );
-				$scope.renderGraph( chartB, true );
+				$scope.renderGraph(true );
 			}
 
 			$scope[selectedTab] = true;
@@ -133,18 +131,22 @@ app.controller('appController', ['$scope', function($scope){
  	};
 
 
- 	$scope.renderGraph = function( graph, destroy ){ 
+ 	$scope.renderGraph = function( destroy ){ 
  		if( destroy ){
- 			graph.lineobj.stop();
+ 			chartA.lineobj.destroy();
+ 			chartB.lineobj.destroy();
  		}else{
- 			graph.lineobj.render();
+			setTimeout(function(){
+		 		chartA.lineobj = chartA.Line(dataA, { responsive: true });
+		 		chartB.lineobj = chartB.PolarArea(dataB, { responsive: true });
+			}, 0);
  		} 		
  	};
 
  	angular.element(document).ready(function(){
  		bootStrapChart();
- 		chartA.lineobj = chartA.Line(dataA);
- 		chartB.lineobj = chartB.PolarArea(dataB);
+ 		chartA.lineobj = chartA.Line(dataA, { responsive: true, maintainAspectRatio: true });
+ 		chartB.lineobj = chartB.PolarArea(dataB, { responsive: true, maintainAspectRatio: true });
  	});
 
 }]);
