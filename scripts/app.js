@@ -82,6 +82,10 @@ app.controller('appController', ['$scope', function($scope){
 
  	$scope.makes = [ 'Honda', 'BMW', 'Toyota' ];
  	$scope.makesModels = [ ['Accord', 'Civic'], ['325'], ['Camry'] ];
+	$scope.services = [ 
+		{ type: 'Cleaning', vendor: 'Artur Auto Service', pickup: '123 Fox Corner road, 02818', date: 'November 23, 2015 (Friday)', active: true }, 
+		{ type: 'Oil Change', vendor: 'Artur Auto Service', pickup: null, date: null, active: false }
+	];
 
  	$scope.vehicles = [
  		{ vin: '1234', make: 'BMW', model: '325', year: 2009 }
