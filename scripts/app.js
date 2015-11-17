@@ -118,6 +118,13 @@ app.controller('appController', ['$scope', function($scope){
  	$scope.years = [];
  	for( var i = 2016; i >= 1980; i-- ){ $scope.years.push(i); }
 
+	$scope.vendors = [ 
+		{ name: 'Artur Auto Service', id: 123 },
+		{ name: 'EG Cleaners', id: 1235 }
+	];
+
+	$scope.schedules = [ 'Once a Year', 'Every 6 Months', 'Once a Month'];
+
  	$scope.addVehicle = function(){
  		var _make = $scope.makes[ $scope.newVehicleForm.make ];
  		var _year = $scope.years[ $scope.newVehicleForm.year ];
@@ -130,6 +137,10 @@ app.controller('appController', ['$scope', function($scope){
  		}
  	};
 
+	$scope.showEditService = function( service, bool ){
+		$scope.showServiceEdit = (bool !== false)?true:false;
+	}
+
 
  	$scope.renderGraph = function( destroy ){ 
  		if( destroy ){
@@ -140,7 +151,7 @@ app.controller('appController', ['$scope', function($scope){
 		 		chartA.lineobj = chartA.Line(dataA, { responsive: true });
 		 		chartB.lineobj = chartB.PolarArea(dataB, { responsive: true });
 			}, 0);
- 		} 		
+ 		}
  	};
 
  	angular.element(document).ready(function(){
